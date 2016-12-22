@@ -1,0 +1,62 @@
+/*/*/*		Programming_Principles and Practice using c++	*/*/*/
+
+
+
+
+
+when programming is done well,such concerns minimize the need for the most frustrating part of 
+programming:debugging; that is,good program structure during developement can minimize yhe 
+numbers of mistakse made and the time needed to search for such errors and to remove them.
+
+
+Tool for organizing program:-(break up a big computation into many liitle ones.)
+
+(1)Abstraction:-Hide details taht we dont need to use a facility(Implementation details)
+		behind a convenient and general interface.
+Ex.Rather than considering the details of how to sort a phone book,we just call the sort 
+   algorithm from standard c++ library.(for details read book ch(4.2))
+
+(2)Divide and conquer:-take a large problem and divide it into several little ones.
+
+Emphasis(special importance) on structure and organization:you dont get good code just by 
+writing lots of statements.
+
+If you have the ambition to build something resonably permanent,you pay attentionto matters
+of code structure and organizationalong the way, rather than having to come back and learn 
+them after failures.
+
+
+Robokits HArdware order
+	HArdware name					Model no.		price 		Total
+							
+(1)ZIGBEE MUTIPOINT WIRELESS SERIAL MODEM		 RKI-1421		1420		4260(3 pcs)
+(2)XBEE EXPLORER USB CP2102 BASED			 RKI-1621		390		1170(3 pcs)
+(3)ROBODUINO ATMEGA328 (BASED ON ARDUINO UNO)		 RKI-1620		450		1350(3 pcs)
+(4)MQ-9 CARBON MONOXIDE COMBUSTIBLE GAS SENSOR MODULE	 RKI-3178		300		300
+(5)IR 38KHZ OBSTACLE SENSOR MODULE			 RKI-3150		150		150
+(6)SOUND SENSOR MODULE					 RKI-3103		120		120	
+(7)FLEX SENSOR 2.2"					 RKI-1830		680		680
+(8)PIR MOTION DETECTION SENSOR MODULE			 RKI-1370		150		150
+(9)CAPACITIVE TOUCH MODULE BASED ON TTP223		 RKI-3152		120		120
+(10)LM35						 RKI-1086		70		70
+(11)DHT11 HUMIDITY & TEMPERATURE SENSOR MODULE		 RKI-3154		200		200
+(12)BAROMETRIC PRESSURE SENSOR BREAKOUT - BMP180	 RKI-2613		375		375
+(13)ANALOG AMBIENT LIGHT SENSOR LDR MODULE		 RKI-3119		80		80
+												9025(TOTAL SUM)
+hardik no:-7778837128
+
+
+
+
+
+
+zigbee:-MY FAE
+pan id 1234
+sh 13A200
+sl 40E3160B
+
+COORDINATOR
+green board + ard.mega	
+
+transmitter
+red borad + ard.uno+lm35		

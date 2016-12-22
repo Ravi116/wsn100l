@@ -1,0 +1,142 @@
+									/******		Arduino functions for reference	******/
+/*
+*This document is prepared for personal use from Arduino tutorial pdf provided by tutorialpoint.com.
+*for further queries and detailed examples refer pdf document.
+*Author :- Bhatt Ravindrakumar D.
+*Date 	:- 08/11/2016(dd/mm/yyyy)
+*/
+
+use Serial.begin(9600);
+
+	pinMode(13,OUTPUT);		//to set desired behavior of pins
+	pinMode(3,INPUT) ; 		// set pin to input without using built in pull up resistor
+	pinMode(5,INPUT_PULLUP); // set pin to input using built in pull up resistor
+
+	I/O functions:-
+
+	digitalWrite(13,HIGH);	//sets pin as 1(high)
+	digitalWrite(13,LOW);	//sets pin as 0(LOW)
+	val = analogRead(analogPin);	// read the analog input pin(10 bit resolution means 0-1023)
+	analogWrite ( pin , value );	//value: the duty cycle: between 0 (always off) and 255 (always on).
+	
+	/*READ page 91 of (Arduino tutorial from tutorialpoint) before using this pin for interface details.*/
+	
+	analogReference (type);		//Configures the reference voltage used for analog input
+	 DEFAULT: The default analog reference of 5 volts (on 5V Arduino boards)
+	or 3.3 volts (on 3.3V Arduino boards)
+	 INTERNAL: An built-in reference, equal to 1.1 volts on the ATmega168 or
+		ATmega328 and 2.56 volts on the ATmega8 (not available on the Arduino Mega)
+	 INTERNAL1V1: A built-in 1.1V reference (Arduino Mega only)
+	 INTERNAL2V56: A built-in 2.56V reference (Arduino Mega only)
+	 EXTERNAL: The voltage applied to the AREF pin (0 to 5V only) is used as the
+		reference.
+		
+To Generate random numbers:-
+	randomSeed(analogRead(5)); // randomize using noise from analog pin 5
+	long random(max) // it generate random numbers from 0 to max
+	long random(min, max) // it generate random numbers from min to max
+	
+Arduino string api:-
+	Serial.println(str);	// print line
+	Serial.print("");	//print anything
+	Serial.write(Serial.read()); //send what you read
+
+c type functions:-
+
+strlen(str);	//length of string(excluding null terminator)
+sizeof(str);	//length of string(including null terminator)
+strcpy(str1,str0);		// copies str0 to str1
+strcat(str1,"string"); 		//add a string to the end of str1.
+
+string object:-
+An object is a construct that contains both data and functions.
+A string object can be created just like a variable and assigned
+a value or string.
+the string object contains functions(which are called 'Methods' in OOP)
+which operate on string data contained in the string object.
+
+Ex:-
+String my_str = "this is my string."
+my_str.toUppercase();	//change string to upper case
+my_str.replace("string","Arduino sketch");	//replace a word in string
+my_str.length();	//get length of string
+
+use of string object uses lot of memory and may cause Arduino to hang
+or unexpected behavior.
+use string object in arduino if code size is small or use character array instead
+of it.
+usage of character array string may be little difficult as you have to make your own
+functions to operate on strings.
+
+TIME MANIPULATION FUNCTIONS:-
+
+(1)delay() also known as blocking function accepts integer arg.
+	waits given milliseconds,not a good option to delay.
+	Ex:-	delay(ms);	//where ms is time in milliseconds to pause(unsigned long)
+	
+(2)delayMicrosecons() accepts integer which represents time in microseconds.
+	1 millisecond = 1000 microsecond
+	1 second = 1000000 microsecond
+	for delay of more than few thousand microsecond use delay instead(max delay 16383).
+(3)millis() used to return No. of milliseconds at time arduino begins running current 
+	program.(overflows after Aprrox. 50days)
+	Ex:-unsigned long time;
+		time = millis();
+(4)micros() used to return No. of microseconds at time arduino begins running current 
+program.
+	(overflows after Aprrox. 70 minutes)
+	on 16MHz board this function has resolution of 4 microseconds while on 8 MHz board 
+	its 8 microseconds.
+	
+CHARACTER FUNCTIONS:-
+	include <cctype> header to use library.
+
+INTERRUPTS :-	
+Most Arduino designs have two hardware interrupts (referred to as "interrupt0" and
+"interrupt1") hard-wired to digital I/O pins 2 and 3, respectively.
+
+Syntax:-
+	attachInterrupt(digitalPinToInterrupt(pin),ISR,mode);//recommended for arduino
+	board
+	attachInterrupt(pin, ISR, mode) ; //recommended Arduino Due, Zero only
+		//argument pin: the pin number
+		//argument ISR: the ISR to call when the interrupt occurs; this function must
+		take no parameters and return nothing. This function is sometimes referred to as
+		an interrupt service routine.
+		//argument mode: defines when the interrupt should be triggered.
+			 LOW to trigger the interrupt whenever the pin is low.
+			 CHANGE to trigger the interrupt whenever the pin changes value.
+			 FALLING whenever the pin goes from high to low.
+			
+			
+I2C PROTOCOL:-
+include<Wire.h>
+for Master Transmitter
+	 Wire.begin(address) – Address is the 7-bit slave address in our case as the
+	master is not specified and it will join the bus as a master.
+	 Wire.beginTransmission(address) – Begin a transmission to the I2C slave
+	device with the given address.
+	 Wire.write(value) – Queues bytes for transmission from a master to slave device
+	(in-between calls to beginTransmission() and endTransmission()).
+	 Wire.endTransmission() – Ends a transmission to a slave device that was begun
+	by beginTransmission() and transmits the bytes that were queued by wire.write().
+	
+for Master receiver
+	 Wire.requestFrom(address,number of bytes) – Used by the master to request bytes
+	from a slave device. The bytes may then be retrieved with the functions
+	wire.available() and wire.read() functions.
+	
+for Slave receiver
+	 Wire.begin(address) – Address is the 7-bit slave address.
+	 Wire.onReceive(received data handler) – Function to be called when a slave
+	device receives data from the master.
+	 Wire.available() – Returns the number of bytes available for retrieval
+	with Wire.read().This should be called inside the Wire.onReceive() handler.
+	
+for Slave Transmitter
+	 Wire.onRequest(handler) – A function is called when a master requests data from this
+slave device.
+
+
+SPI PROTOCOL:-
+	include<SPI.h>
