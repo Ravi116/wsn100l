@@ -1,0 +1,18 @@
+1.preferences>rpiconfig>enable required pins.
+
+2.change password
+
+3.use sudo apt-get update
+
+4.use sudo apt-get upgrade
+
+5.install wiringPi from github
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+
+6.test wiringpi
+
+gpio -v
+
+gpio readall
