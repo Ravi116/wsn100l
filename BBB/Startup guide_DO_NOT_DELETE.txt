@@ -1,0 +1,10 @@
+https://learn.adafruit.com/beaglebone-black-installing-operating-systems/windows
+http://elinux.org/BeagleBoardUbuntu#eMMC:_BeagleBone_Black
+
+http://www.freeos.com/guides/lsst/ch01sec01.html
+https://learn.sparkfun.com/tutorials/gps-basics
+https://github.com/RobertCNelson/u-boot
+
+
+username:ubuntu
+password:temppwd
