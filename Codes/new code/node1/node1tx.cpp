@@ -1,11 +1,12 @@
 #include"node1tx.h"
 #include <LiquidCrystal.h>
 
+
 #include "dht.h"
 
 
 /*      -----Global Define-----      */
-    LiquidCrystal lcd(2,3,8,9,10,11);
+  LiquidCrystal lcd(7,6,5,4,3,2);
     dht DHT;
     
     #define LDR_PIN A0
@@ -20,11 +21,11 @@
     static int serial_time;
     
     const char *sensor_name[] = {"Node Id",
-                "sensor 1 : LDR",
-                "sensor 2 : Con. MIC",
-                "sensor 3 : Humidity",
-                "sensor 4 : PIR",
-                "sensor 5 : Capacitive touch"};
+                " LDR ",
+                " Con. MIC ",
+                " Humidity ",
+                " PIR ",
+                " Capacitive touch"};
     const char *data[] = {"Node ID = ",
                 "Light Level(%) = ",
                 "Sound Level (%)= ",
@@ -191,12 +192,20 @@ void node::recieved_data(float arr0[])
     int i;
     for(i = 0;i<6;i++)
     {
-      delay(1000);
+      delay(2000);
       lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print(*(sensor_name+i));        // Print snesor name
+      if(i > 0){
+       String list = "Sensor " + String(i) + ":- ";
+        lcd.print(list);
+        }
       lcd.setCursor(0,1);
-        lcd.print(*(data+i));            //print output name
+      lcd.print(*(sensor_name+i));        // Print snesor name
+      
+      lcd.setCursor(0,2);
+      lcd.print(*(data+i));            //print output name
+      
+      lcd.setCursor(0,3);
         if(i == 5 || i == 4){              //check if sensor is capacitive touch or PIR
             if(arr0[i])
                 lcd.print("DETECTED");
@@ -224,5 +233,17 @@ float node::packet_generate(float frame[])
   frame[3] = dht11();
   frame[4] = pir();
   frame[5] = ct();
+}
+
+void node::send_packet(float frame[])
+{
+ for(int i= 0 ; i <= 6 ; i++)
+ {
+    Serial.print(frame[i]); 
+    if(i == 6)
+    Serial.print(";");
+    else
+    Serial.print(":");
+ }
 }
 

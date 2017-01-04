@@ -15,7 +15,7 @@ void setup()
 	//XBee.begin(Serial);
 	node2.init_zigbee();
 	node2.init_lcd();
-        node2.sensor_init();
+  node2.sensor_init();
 
 }
 

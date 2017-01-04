@@ -12,10 +12,11 @@ node node1;
 void setup()
 {
 	Serial.begin(9600);
+ //Initialization of lcd
+   node1.init_lcd();
   //Initialization of zigbee module
-        node1.init_zigbee();
-  //Initialization of lcd
-	node1.init_lcd();
+   node1.init_zigbee();
+  
   //Initialization of sensors
 	node1.sensor_init();
 }
@@ -26,8 +27,11 @@ void loop()
 	float frame[6] = {0};
   //function for reading data from sensors and saving them into "frame" array.
         node1.packet_generate(frame);
-  //function for displaying data on lcd.
+   //function for sending data.
+        node1.send_packet(frame);
+   //function for displaying data on lcd.
         node1.recieved_data(frame);
+ 
 	delay(5000);
 }
 

@@ -15,6 +15,7 @@ class node
     float packet_generate(float arr[]);
     void init_lcd(void);
     int init_zigbee(void);
+    void send_packet(float frame[]);
     
     private:
     int ldr(void);

@@ -15,12 +15,12 @@ BMP085 bmp;
 const int SERIAL_TIMEOUT = 2000;
 static int serial_time;
     
-    const char *sensor_name[] = {"Node Id",
-                "sensor 1 : LM 35",
-                "sensor 2 : MQ-9 GAS",
-                "sensor 3 : BMP085",
-                "sensor 4 : IR",
-                "sensor 5 : Flex"};
+    const char *sensor_name[] = {" Node Id ",
+                " LM 35 ",
+                " MQ-9 GAS ",
+                " BMP085 ",
+                " IR ",
+                " Flex "};
     const char *data[] = {"Node ID = ",
                 "Temperature(C) = ",
                 "RS/R0 (ppm)= ",
@@ -112,12 +112,20 @@ void   node::recieved_data(float arr0[])
     int i;
     for(i = 0;i<6;i++)
     {
-      delay(1000);
+     delay(2000);
       lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print(*(sensor_name+i));
+      if(i > 0){
+       String list = "Sensor " + String(i) + ":- ";
+        lcd.print(list);
+        }
       lcd.setCursor(0,1);
-        lcd.print(*(data+i));
+      lcd.print(*(sensor_name+i));        // Print snesor name
+       
+      lcd.setCursor(0,2);
+      lcd.print(*(data+i));            //print output name
+
+      lcd.setCursor(0,3);
         if(i == 4){
             if(arr0[i])
                 lcd.print("DETECTED");
@@ -139,4 +147,14 @@ void node::packet_generate(float frame[])
   frame[5] = flex();
   return ;
 }
+
+void node::send_packet(float frame[])
+{
+ for(int i= 0 ; i < 6 ; i++)
+ {
+    Serial.print(frame[i]); 
+    Serial.print(":");
+ }
+}
+
 
