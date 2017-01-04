@@ -94,7 +94,7 @@ int node::init_zigbee(void)
                 
 void node::sensor_init(void)
 {
-       pinMode(PIR_PIN,INPUT);		//pir sensor
+        pinMode(PIR_PIN,INPUT);		//pir sensor
         pinMode(CT_PIN0,INPUT);	// for capacitive touch sensor
         pinMode(CT_PIN1,INPUT);
   return ;

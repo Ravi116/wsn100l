@@ -1,21 +1,25 @@
+#include <Wire.h>
 #include"node2tx.h"
-
 #include <LiquidCrystal.h>
 #include "BMP085.h"
 
-LiquidCrystal lcd(7,6,5,4,3,2);
 
-BMP085 bmp;
 
-#define LM35_PIN A0
+
+/*      -----Global Define-----      */
+  LiquidCrystal lcd(7,6,5,4,3,2);
+   BMP085 bmp;
+    
+   #define LM35_PIN A0
 #define GAS_PIN A1
 #define IR_PIN A2
 #define FLEX_PIN A3
-
-const int SERIAL_TIMEOUT = 2000;
-static int serial_time;
     
-    const char *sensor_name[] = {" Node Id ",
+    
+    const int SERIAL_TIMEOUT = 2000;
+    static int serial_time;
+    
+     const char *sensor_name[] = {" Node Id ",
                 " LM 35 ",
                 " MQ-9 GAS ",
                 " BMP085 ",
@@ -28,9 +32,16 @@ static int serial_time;
                 "Object = ",
                 "Flex Mov. = "};
                 
-void node::init_lcd()
+/*
+*Function  :-init_lcd
+*Class     :-noe
+*Input     :-void
+*Output    :-void
+*Remarks   :-it will initiate the lcd display.
+*/                
+void node::init_lcd(void)
 {
-    lcd.begin(20,4);
+    lcd.begin(20,4);              //Begin lcd by mentioning lcd type i.e 16*2,16*4,20*4
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("   SIGMA TRAINERS  ");
@@ -42,9 +53,15 @@ void node::init_lcd()
     lcd.print("       WSN100L     ");
     delay(2000);
     lcd.clear();
-    return ;
+    return;
 }
-
+/*
+*Function  :-Init_zigbee 
+*Class     :-node
+*Input     :-void
+*Output    :-Status of zigbee module init process
+*Remarks   :-
+*/                
 int node::init_zigbee(void)
 {
     Serial.write('+');
@@ -65,12 +82,22 @@ int node::init_zigbee(void)
     }
 }
 
+/*
+*Function  :-
+*Class     :-
+*Input     :-
+*Output    :-
+*Remarks   :-
+*/                
 
-
+                
 void node::sensor_init(void)
 {
-  pinMode(IR_PIN,INPUT);		//IR sensor
+        pinMode(IR_PIN,INPUT);		//pir sensor
+       bmp.begin();
+  return ;
 }
+
 
 //----- Read data from LM35 sensor -----
 
@@ -84,12 +111,14 @@ float node::lm35(void){
 //----- Read data from MQ9 GAS sensor -----
 
 float node::gas(void){
-	int input = 0;
+  int input = 0;
     float sensor_volt = (float)(analogRead(GAS_PIN)/1024 * 5.0);
    float RS_gas = (5.0 - sensor_volt)/sensor_volt;
-    float ratio = 	RS_gas/1.66;
-    return(RS_gas);
+    float ratio =   RS_gas/1.66;
+    //return(RS_gas);
+    return(ratio);
 }
+
 
 //----- Read data from IR sensor -----
 
@@ -107,12 +136,21 @@ int input = 0;
     return(val);
 }
 
-void   node::recieved_data(float arr0[])
+
+/*
+*Function  :-recieved_data
+*Class     :-node
+*Input     :-"Frame" Array  
+*Output    :-Data of "Frame" array will be shown on LCD.
+*Remarks   :-
+*/                
+
+void node::recieved_data(float arr0[])
 {
     int i;
     for(i = 0;i<6;i++)
     {
-     delay(2000);
+      delay(2000);
       lcd.clear();
       lcd.setCursor(0,0);
       if(i > 0){
@@ -121,12 +159,12 @@ void   node::recieved_data(float arr0[])
         }
       lcd.setCursor(0,1);
       lcd.print(*(sensor_name+i));        // Print snesor name
-       
+      
       lcd.setCursor(0,2);
       lcd.print(*(data+i));            //print output name
-
+      
       lcd.setCursor(0,3);
-        if(i == 4){
+        if(i == 4){              //check if sensor is capacitive touch or PIR
             if(arr0[i])
                 lcd.print("DETECTED");
             else
@@ -137,7 +175,15 @@ void   node::recieved_data(float arr0[])
     }
 }
 
-void node::packet_generate(float frame[])
+/*
+*Function  :-Packet _generate()
+*Class     :-node
+*Input     :-frame buffer array
+*Output    :-Node id,Reading of sensors will be saved in array passed to this function.
+*Remarks   :-
+*/                
+
+float node::packet_generate(float frame[])
 {
   frame[0] = 2;
   frame[1] = lm35();
@@ -145,7 +191,6 @@ void node::packet_generate(float frame[])
   frame[3] = bmp.readPressure();
   frame[4] = ir();
   frame[5] = flex();
-  return ;
 }
 
 void node::send_packet(float frame[])
@@ -155,6 +200,5 @@ void node::send_packet(float frame[])
     Serial.print(frame[i]); 
     Serial.print(":");
  }
+  Serial.print(";");
 }
-
-
