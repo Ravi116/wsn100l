@@ -36,14 +36,14 @@ lcd.clear()
 
 lcd.message('SSH IP is :\n')
 lcd.message(ipv4_eth0)
-time.sleep(2)
+time.sleep(5)
 lcd.clear()
 
 #remove both """ to print Loopback address 
 """
 lcd.message('Loopback IP is :\n')
 lcd.message(ipv4_lo)
-time.sleep(2)
+time.sleep(5)
 lcd.clear()
 """
 
@@ -51,7 +51,7 @@ lcd.clear()
 """
 lcd.message('USB IP is :\n')
 lcd.message(ipv4_usb0)
-time.sleep(2)
+time.sleep(5)
 lcd.clear()
 """
 #print(ipv4_eth0,ipv4_lo,ipv4_usb0)

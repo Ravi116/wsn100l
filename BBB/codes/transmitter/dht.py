@@ -41,14 +41,26 @@ def display(num1,num2):
    time.sleep(1)
    lcd.clear()
 
-	
+def frame(num,num1):
+	node_id = "@1"
+	tail = ";"
+	s = ":"
+	seq = (node_id,str(num),str(num1))
+	fram = s.join(seq) + tail
+#	print(fram)
+	return fram;
+
+def transmit_data(str1,len):
+	 if ser.is_open:
+#		print(len)
+		ser.write(str(len))
+		time.sleep(1)
+                ser.write(str1)
+                time.sleep(1)
 
 while(1):
   humidity,temperature = Adafruit_DHT.read_retry(sensor,pin)
   if(humidity is not None and temperature is not None):
 	display(temperature,humidity)
-	if ser.is_open:
-		ser.write(str(temperature))
-		time.sleep(1)
-		ser.write(str(humidity))
-		time.sleep(1)
+	data = frame(temperature,humidity)	
+	transmit_data(data,len(data))
